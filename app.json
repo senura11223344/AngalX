@@ -1,0 +1,31 @@
+{
+  "name": "Angal-X",
+  "description": "Javascript WhatsApp bot made by Thinura_Nethz",
+  "logo": "https://raw.githubusercontent.com/Thinura-Nethz/AngalX-Helper/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png?token=GHSAT0AAAAAADEHELJS7IVTOVR5WUNBVU2C2COVYQQ",
+  "keywords": ["bot"],
+  "success_url": "/",
+
+  "env": {
+    "SESSION_ID": {
+      "description": "Put the session-id here.",
+      "required": true
+    },  
+
+    "ALIVE_IMG": {
+      "description": "Put your alive img here.",
+      "required": true
+    },
+    
+    "ALIVE_MSG": {
+      "description": "Put your alive msg here.",
+      "required": true
+    }   
+},
+
+     "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+        }
+     ],
+  "stack": "heroku-24"
+}
