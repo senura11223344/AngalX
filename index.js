@@ -71,7 +71,7 @@ console.log('AngalX connected to whatsapp ✅')
 
 let up = `AngalX connected successful ✅\n\nPREFIX: ${prefix}`;
 
-conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://raw.githubusercontent.com/Thinura-Nethz/AngalX-Helper/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png?token=GHSAT0AAAAAADEHELJS7IVTOVR5WUNBVU2C2COVYQQ` }, caption: up })
+conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://raw.githubusercontent.com/Thinura-Nethz/HELP/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png` }, caption: up })
 
 }
 })
