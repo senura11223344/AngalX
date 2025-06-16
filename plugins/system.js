@@ -30,7 +30,7 @@ cmd({
  ──────────────────────────────
 │ ⏳ *System Uptime:* ${formatRuntime(process.uptime())}
 │ 🗂 *RAM Useage:* ${usedMem.toFixed(2)}MB / ${totalMem.toFixed(0)}MB
-│ 🧠*CPU*: ${cpuModel}
+│ 🧠 *CPU Type*: ${cpuModel}
 │ ⚙ *Host:* ${os.hostname()}
 │ ♦ *Owner:* Thinura_Nethz
  
