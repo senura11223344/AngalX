@@ -2,38 +2,43 @@ const config = require('../config');
 const { cmd, commands } = require('../command');
 const os = require('os');
 
-function runtime(seconds) {
-  seconds = Number(seconds);
-  const d = Math.floor(seconds / (3600 * 24));
-  const h = Math.floor((seconds % (3600 * 24)) / 3600);
+// Convert uptime to readable format
+function formatRuntime(seconds) {
+  const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   const s = Math.floor(seconds % 60);
-
-  return `${d}d ${h}h ${m}m ${s}s`;
+  return `${h} hours, ${m} minutes, ${s} seconds`;
 }
 
 cmd({
-  pattern: 'system',
-  alias: ['status'],
-  desc: 'Check System Up Time , RAM Useage and more System.',
-  category: 'main',
+  pattern: "system",
+  alias: ["status"],
+  desc: "Check System Uptime, RAM Usage, CPU Info, and Host Info",
+  category: "main",
   filename: __filename
-},
-async(conn, mek, m, {
-  from, quoted, body, isCmd, command, args, q,
-  isGroup, sender, senderNumber, botNumber2, botNumber,
-  pushname, isMe, isOwner, groupMetadata, groupName,
-  participants, groupAdmins, isBotAdmins, isAdmins, reply
+}, async (conn, mek, m, {
+  from, reply
 }) => {
   try {
-    let status = `*⏳System Uptime:* ${runtime(process.uptime())}
-*🗂Ram usage:* ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${(os.totalmem() / 1024 / 1024).toFixed(2)}MB
-*⚙HostName:* ${os.hostname()}
-*♦Owner:* Mode Public`;
+    const totalMem = os.totalmem() / 1024 / 1024;
+    const usedMem = process.memoryUsage().heapUsed / 1024 / 1024;
+    const cpuModel = os.cpus()[0].model;
+
+    let status = `
+╭──────────────────────────────
+│ 🔩  *AngalX System Status* 🔩
+├──────────────────────────────
+│ ⏳ *System Uptime:* ${formatRuntime(process.uptime())}
+│ 🗂 *RAM Useage:* ${usedMem.toFixed(2)}MB / ${totalMem.toFixed(0)}MB
+│ 🧠*CPU Tpye:* ${cpuModel}
+│ ⚙ *Host:* ${os.hostname()}
+│ ♦ *Owner:* Thinura_Nethz
+╰──────────────────────────────
+`.trim();
 
     return reply(status);
   } catch (e) {
-    console.log(e);
-    reply(`${e}`);
+    console.error(e);
+    return reply("❌ Error: " + e.message);
   }
 });
