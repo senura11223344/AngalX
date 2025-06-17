@@ -12,6 +12,7 @@ function formatRuntime(seconds) {
 
 cmd({
   pattern: "system",
+  react:"📲",
   alias: ["status"],
   desc: "Check System Uptime, RAM Usage, CPU Info, and Host Info",
   category: "main",
@@ -25,9 +26,9 @@ cmd({
     const cpuModel = os.cpus()[0].model;
 
     let status = `
- ──────────────────────────────
-  🔩  *AngalX System Status* 🔩
- ──────────────────────────────
+ ───────────────────────────
+  🗜*AngalX System Status*🗜 
+ ───────────────────────────
 │ ⏳ *System Uptime:* ${formatRuntime(process.uptime())}
 │ 🗂 *RAM Useage:* ${usedMem.toFixed(2)}MB / ${totalMem.toFixed(0)}MB
 │ 🧠 *CPU Type*: ${cpuModel}
