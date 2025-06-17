@@ -27,7 +27,7 @@ cmd({
 
     let status = `
  ───────────────────────
- 🗜 *AngalX System Status* 🗜 
+ ♠ *AngalX System Status* ♠ 
  ───────────────────────
 │ ⏳ *System Uptime:* ${formatRuntime(process.uptime())}
 │ 🗂 *RAM Useage:* ${usedMem.toFixed(2)}MB / ${totalMem.toFixed(0)}MB
