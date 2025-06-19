@@ -1,7 +1,7 @@
 const { cmd } = require('../command');
 
 cmd({
-  pattern: ".*",
+  pattern: "*",
   react: "✅",
   desc: "Handle plain number replies to menu",
   category: "system",
