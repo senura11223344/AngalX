@@ -1,51 +1,67 @@
+const config = require('../config');
 const { cmd } = require('../command');
-const { getUptime, formatRAM } = require('../lib/functions');
-const os = require('os');
-
-// Convert uptime to readable format
-function formatRuntime(seconds) {
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = Math.floor(seconds % 60);
-  return `${h} hours, ${m} minutes, ${s} seconds`;
 
 cmd({
-  pattern: 'menu',
+  pattern: "menu",
   react: "📜",
-  desc: "Bot menu and commands list",
-  category: 'main',
+  desc: "Get Menu.",
+  category: "main",
   filename: __filename,
-}, async (conn, m) => {
-  
-  const uptime = await getUptime(); // Get bot uptime
-  const ramUsage = formatRAM();     // Get RAM usage (optional)
-  const platform = 'Replit';        // You can dynamically detect it if needed
-  const version = '1.0.0';          // Your bot version
+},
+async (conn, mek, m, {
+  from, sender, reply
+}) => {
+  try {
+    const uptime = process.uptime();
+    const hours = Math.floor(uptime / 3600);
+    const minutes = Math.floor((uptime % 3600) / 60);
+    const seconds = Math.floor(uptime % 60);
 
-  const menu = `*☺ ANGLE-X - WH BOT MENU 👇*
-  
-│ ⏳ *System Uptime:* ${formatRuntime(process.uptime())}
-│ 🗂 *RAM Useage:* ${usedMem.toFixed(2)}MB / ${totalMem.toFixed(0)}MB
-│ 🧠 *CPU Type*: ${cpuModel}
-│ ⚙ *Host:* ${os.hostname()}
+    const used = process.memoryUsage().heapUsed / 1024 / 1024;
+    const total = process.memoryUsage().heapTotal / 1024 / 1024;
 
-📌 Now you can access not only fun but powerful tools from this WhatsApp bot.
+    const menuText = `*📜 ANGLE-X - BOT MENU*
 
-📢 Official Group: https://chat.whatsapp.com/DgkRi449IO565xc2UZGcvA 
-📦 Repo: not connected
+> *Uptime:* ${hours}h ${minutes}m ${seconds}s
+> *RAM Usage:* ${used.toFixed(2)}MB / ${total.toFixed(2)}MB
+> *Platform:* Replit
+> *Version:* 1.0.0
 
-Reply with a number to view command category 📘
+Now you can buy not only movies but everything else from this WhatsApp bot.
+
+📢 *Official Group*: https://chat.whatsapp.com/DgkRi449IO565xc2UZGcvA  
+📦 *Repo*: not connected
+
+*Reply with a number to view commands 📘*
 
 1️⃣ || Main Commands  
 2️⃣ || Group Commands  
 3️⃣ || Movie Commands  
 4️⃣ || Download Commands  
-5️⃣ || Convert Commands   
+5️⃣ || Convert Commands  
+6️⃣ || AI Commands
 
-*• ANGLE-X MENU •*`;
+*|• ANGLE-X WH BOT•*`;
 
-  await conn.sendMessage(m.from, {
-    image: { url: 'https://raw.githubusercontent.com/Thinura-Nethz/HELP/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png' }, // Optional menu image
-    caption: menu,
-  }, { quoted: m });
+    await conn.sendMessage(from, {
+      image: { url: 'https://raw.githubusercontent.com/Thinura-Nethz/HELP/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png' },
+      caption: menuText,
+      footer: 'Reply with number (e.g., 1)',
+      contextInfo: {
+        mentionedJid: [sender],
+        externalAdReply: {
+          title: 'ANGLE-X WH BOT',
+          body: 'Multi-Device WhatsApp Bot',
+          thumbnailUrl: 'https://raw.githubusercontent.com/Thinura-Nethz/HELP/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png',
+          sourceUrl: 'not connected',
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
+      }
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.log(e);
+    reply(`${e}`);
+  }
 });
