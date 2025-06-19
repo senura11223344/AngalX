@@ -1,5 +1,13 @@
 const { cmd } = require('../command');
 const { getUptime, formatRAM } = require('../lib/functions');
+const os = require('os');
+
+// Convert uptime to readable format
+function formatRuntime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  return `${h} hours, ${m} minutes, ${s} seconds`;
 
 cmd({
   pattern: 'menu',
@@ -8,18 +16,18 @@ cmd({
   category: 'main',
   filename: __filename,
 }, async (conn, m) => {
+  
   const uptime = await getUptime(); // Get bot uptime
   const ramUsage = formatRAM();     // Get RAM usage (optional)
   const platform = 'Replit';        // You can dynamically detect it if needed
   const version = '1.0.0';          // Your bot version
 
   const menu = `*☺ ANGLE-X - WH BOT MENU 👇*
-
-> Uptime: ${uptime}
-> RAM Usage: ${ramUsage}
-> Platform: ${platform}
-> Version: ${version}
-> Owner: 🔒
+  
+│ ⏳ *System Uptime:* ${formatRuntime(process.uptime())}
+│ 🗂 *RAM Useage:* ${usedMem.toFixed(2)}MB / ${totalMem.toFixed(0)}MB
+│ 🧠 *CPU Type*: ${cpuModel}
+│ ⚙ *Host:* ${os.hostname()}
 
 📌 Now you can access not only fun but powerful tools from this WhatsApp bot.
 
