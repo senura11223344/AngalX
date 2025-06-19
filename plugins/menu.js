@@ -3,8 +3,8 @@ const { getUptime, formatRAM } = require('../lib/functions');
 
 cmd({
   pattern: 'menu',
-  react: "📜"
-  desc: 'Bot menu and commands list',
+  react: "📜",
+  desc: "Bot menu and commands list",
   category: 'main',
   filename: __filename,
 }, async (conn, m) => {
