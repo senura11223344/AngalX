@@ -71,7 +71,7 @@ Now you can buy not only movies but everything else from this WhatsApp bot.
     • .ai
 
 
-*|• ANGLE-X WH BOT •(stop playing with your self)*`;
+*|• ANGLE-X WH BOT ® •*`;
 
     await conn.sendMessage(from, {
       image: { url: 'https://raw.githubusercontent.com/Thinura-Nethz/HELP/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png' },
