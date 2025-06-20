@@ -1,63 +1,106 @@
-const { cmd } = require('../command');
-const play = require('play-dl');
-const fs = require('fs');
-const path = require('path');
+const { cmd, commands } = require("../command");
+const yts = require("yt-search");
+const { ytmp3 } = require("@vreden/youtube_scraper");
 
-cmd({
-  pattern: "song",
-  react: "🎵",
-  desc: "Download songs from YouTube",
-  category: "download",
-  filename: __filename
-},
-async (conn, mek, m, { args, reply, from, q }) => {
-  try {
-    const query = q || args.join(" ");
-    if (!query) return reply("🎵 Send a song name or YouTube URL.");
-
-    let video;
-    if (!query.includes("youtube.com") && !query.includes("youtu.be")) {
-      reply(`🔍 Searching for "${query}"...`);
-      const results = await play.search(query, { limit: 1 });
-      if (!results.length) return reply("❌ Song not found.");
-      video = results[0];
-    } else {
-      const result = await play.video_basic_info(query);
-      video = result.video_details;
+cmd(
+  {
+    pattern: "song",
+    react: "🎵",
+    desc: "Download Song",
+    category: "download",
+    filename: __filename,
+  },
+  async (
+    angal,
+    mek,
+    m,
+    {
+      from,
+      quoted,
+      body,
+      isCmd,
+      command,
+      args,
+      q,
+      isGroup,
+      sender,
+      senderNumber,
+      botNumber2,
+      botNumber,
+      pushname,
+      isMe,
+      isOwner,
+      groupMetadata,
+      groupName,
+      participants,
+      groupAdmins,
+      isBotAdmins,
+      isAdmins,
+      reply,
     }
+  ) => {
+    try {
+      if (!q) return reply("*PLEASE PROVIDE LINK OR SONG NAME* :😑");
 
-    const title = video.title.replace(/[^\w\s]/gi, "").substring(0, 30);
-    const tempPath = path.resolve(__dirname, `../temp/${title}.mp3`);
-    if (!fs.existsSync(path.resolve(__dirname, '../temp'))) {
-      fs.mkdirSync(path.resolve(__dirname, '../temp'));
+      // Search for the video
+      const search = await yts(q);
+      const data = search.videos[0];
+      const url = data.url;
+
+      // Song metadata description
+      let desc = `
+*ANGAL-X SONG (mp3) DOWNLOADER*
+
+👻 *Title* : ${data.title}
+👻 *Description* : ${data.description}
+👻 *Time* : ${data.timestamp}
+👻 *Ago* : ${data.ago}
+👻 *Views* : ${data.views}
+👻 *Url* : ${data.url}
+
+
+*Your Song Is Uploading...📤*
+
+Developer- Thinura_Nethz
+`;
+
+      // Send metadata thumbnail message
+      await angle.sendMessage(
+        from,
+        { image: { url: data.thumbnail }, caption: desc },
+        { quoted: mek }
+      );
+
+      // Download the audio using @vreden/youtube_scraper
+      const quality = "128"; // Default quality
+      const songData = await ytmp3(url, quality);
+
+      // Validate song duration (limit: 30 minutes)
+      let durationParts = data.timestamp.split(":").map(Number);
+      let totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+
+      if (totalSeconds > 1800) {
+        return reply("⏱️ audio limit is 30 minitues");
+      }
+
+      // Send audio file
+      await angle.sendMessage(
+        from,
+        {
+          audio: { url: songData.download.url },
+          mimetype: "audio/mp3",
+        },
+        { quoted: mek }
+      );
+
+
+      return reply("*Thanks for using AngalX* ❤️");
+    } catch (e) {
+      console.log(e);
+      reply(`❌ Error: ${e.message}`);
     }
-
-    const stream = await play.stream(video.url);
-    const file = fs.createWriteStream(tempPath);
-    stream.stream.pipe(file);
-
-    file.on('finish', async () => {
-      await conn.sendMessage(from, {
-        image: { url: video.thumbnails[0].url },
-        caption: `🎶 *${video.title}*\n\n📺 Channel: ${video.channel.name}\n🔗 Link: ${video.url}`
-      }, { quoted: mek });
-
-      await conn.sendMessage(from, {
-        document: fs.readFileSync(tempPath),
-        mimetype: 'audio/mpeg',
-        fileName: `${title}.mp3`
-      }, { quoted: mek });
-
-      fs.unlinkSync(tempPath);
-    });
-
-    stream.stream.on('error', (err) => {
-      console.log("Stream Error:", err);
-      reply("❌ Error downloading song.");
-    });
-
-  } catch (err) {
-    console.log("Main Error:", err);
-    reply("❌ Failed to download song.");
   }
-});
+);
