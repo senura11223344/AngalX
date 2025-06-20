@@ -32,9 +32,14 @@ Now you can buy not only movies but everything else from this WhatsApp bot.
 📢 *Official Group*: https://chat.whatsapp.com/DgkRi449IO565xc2UZGcvA  
 📦 *Repo*: not connected
 
-*Reply with a number to view commands 📘*
+*All Commands📘*
 
-1️⃣ || Main Commands  
+1️⃣ || Main Commands
+     • .alive
+     • .menu
+     • .system
+     • .restart
+
 2️⃣ || Group Commands  
 3️⃣ || Movie Commands  
 4️⃣ || Download Commands  
