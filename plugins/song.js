@@ -49,7 +49,7 @@ cmd(
 
       // Song metadata description
       let desc = `
-*ANGLE-X SONG DOWNLOADER*
+*ANGAL-X SONG DOWNLOADER*
 
 👻 *Title* : ${data.title}
 👻 *Description* : ${data.description}
@@ -91,12 +91,12 @@ Developer- Thinura_Nethz
         from,
         {
           audio: { url: songData.download.url },
-          mimetype: "audio/mp3",
+          mimetype: "audio/mpeg",
         },
         { quoted: mek }
       );
 
-      return reply("*Thanks for using AngalX* ❤️");
+      return reply("*Thanks for using AngalX* \n *mp3 Downloader* ❤️");
     } catch (e) {
       console.log(e);
       reply(`❌ Error: ${e.message}`);
