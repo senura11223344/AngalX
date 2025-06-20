@@ -1,7 +1,7 @@
 const { cmd } = require('../command');
 
 cmd({
-  pattern: "1",
+  pattern: "one",
   react: false,
   desc: "Reply handler for menu option 1",
   category: "system",
