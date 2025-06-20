@@ -7,7 +7,7 @@ const path = require('path');
 cmd({
   pattern: "song",
   react: "🎵"
-  desc: "Download YouTube songs with play-dl",
+  desc: "download songs from youtube",
   category: "download",
   filename: __filename
 },
