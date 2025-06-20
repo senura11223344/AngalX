@@ -34,19 +34,44 @@ Now you can buy not only movies but everything else from this WhatsApp bot.
 
 *All Commands📘*
 
-1️⃣ || Main Commands
+1️⃣ || *Main Commands*
      • .alive
      • .menu
      • .system
      • .restart
 
-2️⃣ || Group Commands  
-3️⃣ || Movie Commands  
-4️⃣ || Download Commands  
-5️⃣ || Convert Commands  
-6️⃣ || AI Commands
+2️⃣ || *Group Commands*  
+    • not installed
+    • not installed
+    • not installed
+    • not installed
+    
+3️⃣ || *Movie Commands* 
+    • .movie
+    • .tv
+    • not installed
+    • not installed
+      
+4️⃣ || *Download Commands* 
+    • .song
+    • .video
+    • .fb
+    • .tiktok
+    • .insta
+    • not installed
+    
+5️⃣ || *Convert Commands* 
+    • not installed
+    • not installed
+    • not installed
+    • not installed
 
-*|• ANGLE-X WH BOT•*`;
+
+6️⃣ || *AI Commands*
+    • .ai
+
+
+*|• ANGLE-X WH BOT •(stop playing with your self)*`;
 
     await conn.sendMessage(from, {
       image: { url: 'https://raw.githubusercontent.com/Thinura-Nethz/HELP/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png' },
@@ -60,7 +85,7 @@ Now you can buy not only movies but everything else from this WhatsApp bot.
           thumbnailUrl: 'https://raw.githubusercontent.com/Thinura-Nethz/HELP/refs/heads/main/ChatGPT%20Image%20Jun%2015%2C%202025%2C%2004_55_04%20PM.png',
           sourceUrl: 'not connected',
           mediaType: 1,
-          renderLargerThumbnail: true
+          renderLargerThumbnail: false
         }
       }
     }, { quoted: mek });
