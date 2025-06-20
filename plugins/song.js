@@ -49,7 +49,7 @@ cmd(
 
       // Song metadata description
       let desc = `
-*ANGAL-X SONG (mp3) DOWNLOADER*
+*ANGLE-X SONG DOWNLOADER*
 
 👻 *Title* : ${data.title}
 👻 *Description* : ${data.description}
@@ -65,7 +65,7 @@ Developer- Thinura_Nethz
 `;
 
       // Send metadata thumbnail message
-      await angle.sendMessage(
+      await angal.sendMessage(
         from,
         { image: { url: data.thumbnail }, caption: desc },
         { quoted: mek }
@@ -83,11 +83,11 @@ Developer- Thinura_Nethz
           : durationParts[0] * 60 + durationParts[1];
 
       if (totalSeconds > 1800) {
-        return reply("⏱️ audio limit is 30 minitues");
+        return reply("⏱️ audio limit is 30 minutes");
       }
 
       // Send audio file
-      await angle.sendMessage(
+      await angal.sendMessage(
         from,
         {
           audio: { url: songData.download.url },
@@ -95,7 +95,6 @@ Developer- Thinura_Nethz
         },
         { quoted: mek }
       );
-
 
       return reply("*Thanks for using AngalX* ❤️");
     } catch (e) {
