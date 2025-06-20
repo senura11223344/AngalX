@@ -1,4 +1,3 @@
-
 const { cmd } = require('../command');
 const play = require('play-dl');
 const fs = require('fs');
@@ -6,8 +5,8 @@ const path = require('path');
 
 cmd({
   pattern: "song",
-  react: "🎵"
-  desc: "download songs from youtube",
+  react: "🎵",
+  desc: "Download songs from YouTube",
   category: "download",
   filename: __filename
 },
@@ -17,8 +16,6 @@ async (conn, mek, m, { args, reply, from, q }) => {
     if (!query) return reply("🎵 Send a song name or YouTube URL.");
 
     let video;
-
-    // 🔍 Search if not a URL
     if (!query.includes("youtube.com") && !query.includes("youtu.be")) {
       reply(`🔍 Searching for "${query}"...`);
       const results = await play.search(query, { limit: 1 });
@@ -29,37 +26,38 @@ async (conn, mek, m, { args, reply, from, q }) => {
       video = result.video_details;
     }
 
-    // 🔗 Download audio
-    const stream = await play.stream(video.url);
     const title = video.title.replace(/[^\w\s]/gi, "").substring(0, 30);
-    const filePath = path.resolve(__dirname, `../temp/${title}.mp3`);
-
+    const tempPath = path.resolve(__dirname, `../temp/${title}.mp3`);
     if (!fs.existsSync(path.resolve(__dirname, '../temp'))) {
       fs.mkdirSync(path.resolve(__dirname, '../temp'));
     }
 
-    const file = fs.createWriteStream(filePath);
+    const stream = await play.stream(video.url);
+    const file = fs.createWriteStream(tempPath);
     stream.stream.pipe(file);
 
     file.on('finish', async () => {
-      // 📝 Send card
       await conn.sendMessage(from, {
         image: { url: video.thumbnails[0].url },
         caption: `🎶 *${video.title}*\n\n📺 Channel: ${video.channel.name}\n🔗 Link: ${video.url}`
       }, { quoted: mek });
 
-      // 📩 Send MP3
       await conn.sendMessage(from, {
-        document: fs.readFileSync(filePath),
+        document: fs.readFileSync(tempPath),
         mimetype: 'audio/mpeg',
         fileName: `${title}.mp3`
       }, { quoted: mek });
 
-      fs.unlinkSync(filePath); // cleanup
+      fs.unlinkSync(tempPath);
+    });
+
+    stream.stream.on('error', (err) => {
+      console.log("Stream Error:", err);
+      reply("❌ Error downloading song.");
     });
 
   } catch (err) {
-    console.log(err);
-    reply("❌ Failed to download the song.");
+    console.log("Main Error:", err);
+    reply("❌ Failed to download song.");
   }
 });
