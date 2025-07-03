@@ -11,3 +11,4 @@ ALIVE_MSG: process.env.ALIVE_MSG || "*👀Hey, I'm Angal-X Multi-Deveice (MD⚙)
 AUTO_READ_STATUS: process.env.AUTO_READ_STATUS || "true",    
 MODE: process.env.MODE || "public", 
 };
+
